@@ -13,16 +13,16 @@ namespace FAS.FirehousePro.Configuration
             ConfigurationCache = new ConcurrentDictionary<string, IConfigurationRoot>();
         }
 
-        public static IConfigurationRoot Get(string path, string environmentName = null, bool addUserSecrets = false)
+        public static IConfigurationRoot Get(string path, string environmentName = null)
         {
-            var cacheKey = path + "#" + environmentName + "#" + addUserSecrets;
+            var cacheKey = path + "#" + environmentName;
             return ConfigurationCache.GetOrAdd(
                 cacheKey,
-                _ => BuildConfiguration(path, environmentName, addUserSecrets)
+                _ => BuildConfiguration(path, environmentName)
             );
         }
 
-        private static IConfigurationRoot BuildConfiguration(string path, string environmentName = null, bool addUserSecrets = false)
+        private static IConfigurationRoot BuildConfiguration(string path, string environmentName = null)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(path)
@@ -34,11 +34,6 @@ namespace FAS.FirehousePro.Configuration
             }
 
             builder = builder.AddEnvironmentVariables();
-
-            if (addUserSecrets)
-            {
-                builder.AddUserSecrets();
-            }
 
             return builder.Build();
         }

@@ -61,8 +61,7 @@ namespace FAS.FirehousePro.Web.Authentication
                 }
             }
 
-            var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)
-                             ?? claims.FirstOrDefault(c => c.Type == System.IdentityModel.Claims.ClaimTypes.Email);
+            var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
 
             if (emailClaim != null)
             {
