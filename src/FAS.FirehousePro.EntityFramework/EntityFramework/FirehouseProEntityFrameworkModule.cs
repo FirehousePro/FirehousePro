@@ -16,13 +16,12 @@ namespace FAS.FirehousePro.EntityFramework
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FirehouseProDbContext, Migrations.Configuration>());
 
-
-            //var configuration = new Migrations.Configuration();
-            //var migrator = new DbMigrator(configuration);
-            //if (migrator.GetPendingMigrations().Any())
-            //{
-            //    migrator.Update();
-            //}
+            var configuration = new Migrations.Configuration();
+            var migrator = new DbMigrator(configuration);
+            if (migrator.GetPendingMigrations().Any())
+            {
+                migrator.Update();
+            }
         }
 
         public override void Initialize()

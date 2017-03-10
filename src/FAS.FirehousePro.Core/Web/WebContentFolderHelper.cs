@@ -19,17 +19,28 @@ namespace FAS.FirehousePro.Web
             }
 
             var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
-            while (!DirectoryContains(directoryInfo.FullName, "FAS.FirehousePro.sln"))
-            {
-                if (directoryInfo.Parent == null)
-                {
-                    throw new ApplicationException("Could not find content root folder!");
-                }
 
-                directoryInfo = directoryInfo.Parent;
+            var rootFolder = "";
+
+            if(DirectoryContains(directoryInfo.FullName, "appsettings.json"))
+            {
+                rootFolder = directoryInfo.FullName;
+            }
+            else
+            {
+                while (!DirectoryContains(directoryInfo.FullName, "FAS.FirehousePro.sln"))
+                {
+                    if (directoryInfo.Parent == null)
+                    {
+                        throw new ApplicationException("Could not find content root folder!");
+                    }
+
+                    directoryInfo = directoryInfo.Parent;
+                }
+                rootFolder = Path.Combine(directoryInfo.FullName, @"src\FAS.FirehousePro.Web");
             }
 
-            return Path.Combine(directoryInfo.FullName, @"src\FAS.FirehousePro.Web");
+            return rootFolder;
         }
 
         private static bool DirectoryContains(string directory, string fileName)
