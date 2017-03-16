@@ -1,57 +1,38 @@
+﻿using FAS.FirehousePro.Core.FireDepartments;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
-using Abp.Authorization;
-using Abp.AutoMapper;
-using Abp.Extensions;
-using Abp.MultiTenancy;
-using Abp.Runtime.Security;
-using FAS.FirehousePro.Authorization;
+using FAS.FirehousePro.Application.FireDepartments.Dto;
+using FAS.FirehousePro.MultiTenancy;
 using FAS.FirehousePro.Authorization.Roles;
 using FAS.FirehousePro.Editions;
-using FAS.FirehousePro.MultiTenancy.Dto;
+using Abp.AutoMapper;
 using FAS.FirehousePro.Users;
 
-namespace FAS.FirehousePro.MultiTenancy
+namespace FAS.FirehousePro.Application.FireDepartments
 {
-    [AbpAuthorize(PermissionNames.Pages_Tenants)]
-    public class TenantAppService : FirehouseProAppServiceBase, ITenantAppService
+    public class FireDepartmentAppService : FirehouseProAppServiceBase, IFireDepartmentAppService
     {
-        private readonly TenantManager _tenantManager;
+        private readonly IFireDepartmentManager _fireDepartmentManager;
         private readonly RoleManager _roleManager;
         private readonly EditionManager _editionManager;
-        private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
 
-        public TenantAppService(
-            TenantManager tenantManager, 
-            RoleManager roleManager, 
-            EditionManager editionManager, 
-            IAbpZeroDbMigrator abpZeroDbMigrator)
+        public FireDepartmentAppService(
+            IFireDepartmentManager fireDepartmentManager,
+            RoleManager roleManager,
+            EditionManager editionManager)
         {
-            _tenantManager = tenantManager;
+            _fireDepartmentManager = fireDepartmentManager;
             _roleManager = roleManager;
             _editionManager = editionManager;
-            _abpZeroDbMigrator = abpZeroDbMigrator;
         }
 
-        public ListResultDto<TenantListDto> GetTenants()
-        {
-            return new ListResultDto<TenantListDto>(
-                _tenantManager.Tenants
-                    .OrderBy(t => t.TenancyName)
-                    .ToList()
-                    .MapTo<List<TenantListDto>>()
-                );
-        }
-
-        public async Task CreateTenant(CreateTenantInput input)
+        public async Task CreateFireDepartment(CreateFireDepartmentInput input)
         {
             //Create tenant
-            var tenant = input.MapTo<Tenant>();
-            tenant.ConnectionString = input.ConnectionString.IsNullOrEmpty()
-                ? null
-                : SimpleStringCipher.Instance.Encrypt(input.ConnectionString);
+            var fireDepartment = input.MapTo<FireDepartment>();
+            var tenant = new Tenant(input.Domain, input.Name);
 
             var defaultEdition = await _editionManager.FindByNameAsync(EditionManager.DefaultEditionName);
             if (defaultEdition != null)
@@ -59,11 +40,8 @@ namespace FAS.FirehousePro.MultiTenancy
                 tenant.EditionId = defaultEdition.Id;
             }
 
-            CheckErrors(await TenantManager.CreateAsync(tenant));
+            CheckErrors(await _fireDepartmentManager.CreateFireDepartmentAsync(fireDepartment, tenant));
             await CurrentUnitOfWork.SaveChangesAsync(); //To get new tenant's id.
-
-            //Create tenant database
-            _abpZeroDbMigrator.CreateOrMigrateForTenant(tenant);
 
             //We are working entities of new tenant, so changing tenant filter
             using (CurrentUnitOfWork.SetTenantId(tenant.Id))
@@ -86,6 +64,16 @@ namespace FAS.FirehousePro.MultiTenancy
                 CheckErrors(await UserManager.AddToRoleAsync(adminUser.Id, adminRole.Name));
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
+        }
+
+        public ListResultDto<FireDepartmentListDto> GetFireDepartments()
+        {
+            return new ListResultDto<FireDepartmentListDto>(
+                _fireDepartmentManager.FireDepartments
+                    .OrderBy(f => f.Name)
+                    .ToList()
+                    .MapTo<List<FireDepartmentListDto>>()
+                );
         }
     }
 }
