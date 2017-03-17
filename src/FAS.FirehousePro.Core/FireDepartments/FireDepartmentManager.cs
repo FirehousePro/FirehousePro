@@ -38,9 +38,18 @@ namespace FAS.FirehousePro.Core.FireDepartments
                 //TODO: Validate Firedepartment
 
                 var org = new OrganizationUnit(tenant.Id, fireDepartment.Name);
+                await _organizationUnitManager.CreateAsync(org);
+                await CurrentUnitOfWork.SaveChangesAsync();
 
                 fireDepartment.Tenant = tenant;
+                fireDepartment.TenantId = tenant.Id;
+                fireDepartment.OrganizationUnitId = org.Id;
                 fireDepartment.OrganizationUnit = org;
+
+                if(fireDepartment.Address == null)
+                {
+                    fireDepartment.Address = new Commons.Address();
+                }
 
                 await _fireDepartmentRepo.InsertAsync(fireDepartment);
             }

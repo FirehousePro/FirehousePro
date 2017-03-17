@@ -1,8 +1,8 @@
 ﻿(function() {
     $(function() {
 
-        var _tenantService = abp.services.app.tenant;
-        var _$modal = $('#TenantCreateModal');
+        var _fireDepartmentService = abp.services.app.fireDepartment;
+        var _$modal = $('#DepartmentCreateModal');
         var _$form = _$modal.find('form');
 
         _$form.validate();
@@ -14,12 +14,12 @@
                 return;
             }
 
-            var tenant = _$form.serializeFormToObject(); //serializeFormToObject is defined in main.js
+            var fireDepartment = _$form.serializeFormToObject(); //serializeFormToObject is defined in main.js
 
             abp.ui.setBusy(_$modal);
-            _tenantService.createTenant(tenant).done(function () {
+            _fireDepartmentService.createFireDepartment(fireDepartment).done(function () {
                 _$modal.modal('hide');
-                location.reload(true); //reload page to see new tenant!
+                location.reload(true); //reload page to see new fireDepartment!
             }).always(function() {
                 abp.ui.clearBusy(_$modal);
             });

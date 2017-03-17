@@ -13,7 +13,7 @@
     <text name="TenantIsNotActive" value="La empresa {0} no está activa." />
     <text name="UserIsNotActiveAndCanNotLogin" value="El usuario {0} no está activo y no puede conectarse." />
     <text name="PleaseEnterLoginInformation" value="Por favor, introduzca la información de inicio de sesión" />
-    <text name="TenancyName" value="Nombre de la empresa" />
+    <text name="DepartmentDomain" value="Nombre" />
     <text name="UserNameOrEmail" value="Nombre de usuario o correo electrónico" />
     <text name="Password" value="Contraseña" />
     <text name="RememberMe" value="Recuérdame" />
@@ -27,9 +27,9 @@
     <text name="Surname" value="Apellido" />
     <text name="EmailAddress" value="Dirección de correo electrónico" />
 
-    <text name="Tenants" value="Empresas" />
+    <text name="FireDepartments" value="Empresas" />
     <text name="SavedSuccessfully" value="Guardado correctamente" />
-    <text name="CreateNewTenant" value="Crear nueva empresa" />
+    <text name="CreateNewFireDepartment" value="Crear" />
     <text name="AdminEmailAddress" value="Dirección de correo electrónico del administrador" />
     <text name="Save" value="Guardar" />
     <text name="Cancel" value="Cancelar" />

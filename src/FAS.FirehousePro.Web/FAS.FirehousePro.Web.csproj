@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\view-resources\Views\FireDepartments\Index.js" />
+    <Content Include="wwwroot\view-resources\Views\FireDepartments\Index.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="App.config" />
     <None Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -30,5 +30,10 @@ namespace FAS.FirehousePro.Core.Commons
             Zip = zip;
             County = county;
         }
+
+        public Address()
+        {
+
+        }
     }
 }
