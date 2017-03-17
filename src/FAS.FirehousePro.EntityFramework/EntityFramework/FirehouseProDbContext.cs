@@ -7,6 +7,9 @@ using FAS.FirehousePro.Configuration;
 using FAS.FirehousePro.MultiTenancy;
 using FAS.FirehousePro.Users;
 using FAS.FirehousePro.Web;
+using FAS.FirehousePro.Core.FireDepartments;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using FAS.FirehousePro.EntityFramework.EntityFramework.TypeConfigs;
 
 namespace FAS.FirehousePro.EntityFramework
 {
@@ -14,12 +17,20 @@ namespace FAS.FirehousePro.EntityFramework
     public class FirehouseProDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         /* Define an IDbSet for each entity of the application */
+        public IDbSet<FireDepartment> FireDepartments { get; set; }
 
         /* Default constructor is needed for EF command line tool. */
         public FirehouseProDbContext()
             : base(GetConnectionString())
         {
 
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Configurations.Add(new FireDepartmentTypeConfiguration());
         }
 
         private static string GetConnectionString()

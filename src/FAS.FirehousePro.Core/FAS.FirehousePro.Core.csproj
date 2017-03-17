@@ -11,7 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+    <EmbeddedResource Include="Localization\SourceFiles\FirehousePro-es.xml" />
+    <EmbeddedResource Include="Localization\SourceFiles\FirehousePro.xml" />
   </ItemGroup>
 
   <ItemGroup>

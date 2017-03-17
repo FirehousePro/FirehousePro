@@ -13,7 +13,7 @@
     <text name="TenantIsNotActive" value="Tenant {0} is not active." />
     <text name="UserIsNotActiveAndCanNotLogin" value="User {0} is not active and can not log in." />
     <text name="PleaseEnterLoginInformation" value="Please enter login information" />
-    <text name="TenancyName" value="Tenancy name" />
+    <text name="DepartmentDomain" value="Domain" />
     <text name="UserNameOrEmail" value="User name or email" />
     <text name="Password" value="Password" />
     <text name="RememberMe" value="Remember me" />
@@ -27,9 +27,9 @@
     <text name="Surname" value="Surname" />
     <text name="EmailAddress" value="Email address" />
 
-    <text name="Tenants" value="Tenants" />
+    <text name="FireDepartments" value="Departments" />
     <text name="SavedSuccessfully" value="Saved successfully" />
-    <text name="CreateNewTenant" value="Create new tenant" />
+    <text name="CreateNewFireDepartment" value="Create" />
     <text name="AdminEmailAddress" value="Admin email address" />
     <text name="Save" value="Save" />
     <text name="Cancel" value="Cancel" />

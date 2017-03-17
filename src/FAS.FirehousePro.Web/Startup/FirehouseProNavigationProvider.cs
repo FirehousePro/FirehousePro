@@ -22,9 +22,9 @@ namespace FAS.FirehousePro.Web.Startup
                         )
                 ).AddItem(
                     new MenuItemDefinition(
-                        PageNames.Tenants,
-                        L("Tenants"),
-                        url: "Tenants",
+                        PageNames.FireDepartments,
+                        L("FireDepartments"),
+                        url: "FireDepartments",
                         icon: "fa fa-globe",
                         requiredPermissionName: PermissionNames.Pages_Tenants
                         )

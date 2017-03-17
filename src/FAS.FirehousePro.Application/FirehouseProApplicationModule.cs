@@ -2,6 +2,9 @@
 using Abp.AutoMapper;
 using Abp.Modules;
 using FAS.FirehousePro.Authorization;
+using FAS.FirehousePro.Core.FireDepartments;
+using FAS.FirehousePro.Application.FireDepartments.Dto;
+using AutoMapper;
 
 namespace FAS.FirehousePro
 {
@@ -19,5 +22,6 @@ namespace FAS.FirehousePro
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
+
     }
 }
