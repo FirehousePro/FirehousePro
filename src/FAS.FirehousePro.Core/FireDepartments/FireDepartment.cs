@@ -18,6 +18,14 @@ namespace FAS.FirehousePro.Core.FireDepartments
 
         public virtual string Name { get; set; }
 
+        public string Domain
+        {
+            get
+            {
+                return Tenant.TenancyName;
+            }
+        }
+
         public virtual Address Address { get; set; }
         public virtual Tenant Tenant { get; set; }
         public virtual OrganizationUnit OrganizationUnit { get; set; }

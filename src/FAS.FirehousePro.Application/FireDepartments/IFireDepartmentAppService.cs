@@ -10,8 +10,14 @@ namespace FAS.FirehousePro.Application.FireDepartments
 {
     public interface IFireDepartmentAppService
     {
-        ListResultDto<FireDepartmentListDto> GetFireDepartments();
+        Task<ListResultDto<FireDepartmentListDto>> GetFireDepartments();
+
+        Task<FireDepartmentDto> GetFireDepartment(int id);
 
         Task CreateFireDepartment(CreateFireDepartmentInput input);
+
+        Task UpdateFireDepartment(UpdateFireDepartmentInput input);
+
+        void DeleteFireDepartment(int id);
     }
 }

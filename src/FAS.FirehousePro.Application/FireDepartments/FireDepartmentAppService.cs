@@ -9,6 +9,7 @@ using FAS.FirehousePro.Authorization.Roles;
 using FAS.FirehousePro.Editions;
 using Abp.AutoMapper;
 using FAS.FirehousePro.Users;
+using System;
 
 namespace FAS.FirehousePro.Application.FireDepartments
 {
@@ -66,14 +67,25 @@ namespace FAS.FirehousePro.Application.FireDepartments
             }
         }
 
-        public ListResultDto<FireDepartmentListDto> GetFireDepartments()
+        public void DeleteFireDepartment(int id)
         {
-            return new ListResultDto<FireDepartmentListDto>(
-                _fireDepartmentManager.FireDepartments
-                    .OrderBy(f => f.Name)
-                    .ToList()
-                    .MapTo<List<FireDepartmentListDto>>()
-                );
+            throw new NotImplementedException();
+        }
+
+        public Task<FireDepartmentDto> GetFireDepartment(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ListResultDto<FireDepartmentListDto>> GetFireDepartments()
+        {
+            var fireDepts = await _fireDepartmentManager.GetAllFireDepartments();
+            return new ListResultDto<FireDepartmentListDto>(fireDepts.MapTo<List<FireDepartmentListDto>>());
+        }
+
+        public Task UpdateFireDepartment(UpdateFireDepartmentInput input)
+        {
+            throw new NotImplementedException();
         }
     }
 }

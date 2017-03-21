@@ -1,6 +1,4 @@
-﻿using Abp.AutoMapper;
-using FAS.FirehousePro.Application.Commons.Dto;
-using FAS.FirehousePro.Core.FireDepartments;
+﻿using FAS.FirehousePro.Application.Commons.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace FAS.FirehousePro.Application.FireDepartments.Dto
 {
-    [AutoMapFrom(typeof(FireDepartment))]
-    public class FireDepartmentListDto
+    public class FireDepartmentDto
     {
         public string Name { get; set; }
-
-
         public string Domain { get; set; }
-
-
         public AddressDto Address { get; set; }
     }
 }
