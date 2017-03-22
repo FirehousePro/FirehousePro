@@ -5,6 +5,7 @@ using FAS.FirehousePro.Users;
 using Abp.MultiTenancy;
 using FAS.FirehousePro.Core.FireDepartments;
 using FAS.FirehousePro.Application.Commons.Dto;
+using Abp.Auditing;
 
 namespace FAS.FirehousePro.Application.FireDepartments.Dto
 {
@@ -22,6 +23,10 @@ namespace FAS.FirehousePro.Application.FireDepartments.Dto
         [Required]
         [StringLength(User.MaxEmailAddressLength)]
         public string AdminEmailAddress { get; set; }
+
+        [StringLength(User.MaxPlainPasswordLength)]
+        [DisableAuditing]
+        public string AdminPassword { get; set; }
 
         public CreateAddressInput Address { get; set; }
         

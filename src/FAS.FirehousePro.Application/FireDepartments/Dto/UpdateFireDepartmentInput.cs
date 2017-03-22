@@ -11,6 +11,8 @@ namespace FAS.FirehousePro.Application.FireDepartments.Dto
     [AutoMapTo(typeof(FireDepartment))]
     public class UpdateFireDepartmentInput
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(AbpTenantBase.MaxTenancyNameLength)]
         [RegularExpression(Tenant.TenancyNameRegex)]
@@ -18,10 +20,6 @@ namespace FAS.FirehousePro.Application.FireDepartments.Dto
 
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        [StringLength(User.MaxEmailAddressLength)]
-        public string AdminEmailAddress { get; set; }
 
         public CreateAddressInput Address { get; set; }
         

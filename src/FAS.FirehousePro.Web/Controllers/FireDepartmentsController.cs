@@ -50,10 +50,10 @@ namespace FAS.FirehousePro.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UpdateFireDepartmentInput input)
+        public async Task<ActionResult> Edit(UpdateFireDepartmentInput input)
         {
-            var output = _fireDepartmentAppService.GetFireDepartments();
-            return View(output);
+            await _fireDepartmentAppService.UpdateFireDepartment(input);
+            return RedirectToAction("Index");
         }
     }
 }

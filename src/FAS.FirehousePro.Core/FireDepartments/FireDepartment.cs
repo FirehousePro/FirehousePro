@@ -30,5 +30,13 @@ namespace FAS.FirehousePro.Core.FireDepartments
         public virtual Tenant Tenant { get; set; }
         public virtual OrganizationUnit OrganizationUnit { get; set; }
 
+        public void ChangeDomain(string domain)
+        {
+            if (domain == Tenant.TenancyName)
+                return;
+
+            Tenant.TenancyName = domain;
+        }
+
     }
 }

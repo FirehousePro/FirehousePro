@@ -12,7 +12,7 @@ namespace FAS.FirehousePro.Core.FireDepartments
     public interface IFireDepartmentManager
     {
         Task<IEnumerable<FireDepartment>> GetAllFireDepartments();
-        Task<IdentityResult> CreateFireDepartmentAsync(FireDepartment fireDepartment, Tenant tenant);
+        Task<IdentityResult> CreateFireDepartmentAsync(FireDepartment fireDepartment, Tenant tenant, string adminEmailAddress, string adminPassword);
         Task<FireDepartment> UpdateFireDepartmentAsync(FireDepartment fireDepartment);
         Task<IEnumerable<FireDepartment>> SearchFireDepartmentsAsync(ISpecification<FireDepartment> spec);
         Task<FireDepartment> GetFireDepartmentAsync(int id);
