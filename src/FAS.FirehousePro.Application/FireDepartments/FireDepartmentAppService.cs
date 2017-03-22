@@ -72,9 +72,10 @@ namespace FAS.FirehousePro.Application.FireDepartments
             throw new NotImplementedException();
         }
 
-        public Task<FireDepartmentDto> GetFireDepartment(int id)
+        public async Task<FireDepartmentDto> GetFireDepartment(int id)
         {
-            throw new NotImplementedException();
+            var fireDepartment = await _fireDepartmentManager.GetFireDepartmentAsync(id);
+            return fireDepartment.MapTo<FireDepartmentDto>();
         }
 
         public async Task<ListResultDto<FireDepartmentListDto>> GetFireDepartments()

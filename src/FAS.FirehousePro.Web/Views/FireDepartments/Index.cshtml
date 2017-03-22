@@ -10,12 +10,13 @@
     <h1>@L("FireDepartments")</h1>
     <div class="row">
         <div class="col-md-12">
-            <a href="/firedepartments/create" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> @L("CreateNewFireDepartment")</a>
+            <a asp-controller="FireDepartments" asp-action="Create" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> @L("CreateNewFireDepartment")</a>
             <table class="table">
                 <thead>
                     <tr>
                         <th>@L("DepartmentDomain")</th>
                         <th>@L("Name")</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,9 @@
                         <tr>
                             <td>@dept.Domain</td>
                             <td>@dept.Name</td>
+                            <td>
+                                <a asp-controller="FireDepartments" asp-action="Edit" asp-route-id="@dept.Id" >Edit</a>
+                            </td>
                         </tr>
                     }
                 </tbody>

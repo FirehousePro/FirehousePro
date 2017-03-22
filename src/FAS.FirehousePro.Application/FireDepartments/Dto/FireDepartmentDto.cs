@@ -1,12 +1,11 @@
-﻿using FAS.FirehousePro.Application.Commons.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Abp.AutoMapper;
+using FAS.FirehousePro.Application.Commons.Dto;
+using FAS.FirehousePro.Core.FireDepartments;
 
 namespace FAS.FirehousePro.Application.FireDepartments.Dto
 {
+    [AutoMapFrom(typeof(FireDepartment))]
+    [AutoMapTo(typeof(UpdateFireDepartmentInput))]
     public class FireDepartmentDto
     {
         public string Name { get; set; }

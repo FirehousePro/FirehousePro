@@ -26,6 +26,21 @@ namespace FAS.FirehousePro.EntityFramework.Repositories
             var query = GetAllIncluding(propertySelectors);
             return await query.ToListAsync();
         }
+
+        public async Task<TEntity> GetWithAsync(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            var query = GetAllIncluding(propertySelectors);
+
+            //Builds this (e => e.Id == id)
+            var arg = Expression.Parameter(typeof(TEntity), "e");
+            var predicate = Expression.Lambda<Func<TEntity, bool>>(
+                Expression.Equal(
+                    Expression.Property(arg, "Id"),
+                    Expression.Constant(id)),
+                arg);
+
+            return await query.SingleAsync(predicate);
+        }
     }
 
     public abstract class FirehouseProRepositoryBase<TEntity> : FirehouseProRepositoryBase<TEntity, int>, 

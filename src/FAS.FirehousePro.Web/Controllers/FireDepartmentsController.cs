@@ -1,4 +1,7 @@
 ﻿using Abp.AspNetCore.Mvc.Authorization;
+using Abp.AutoMapper;
+using Abp.Runtime.Validation;
+using FAS.FirehousePro.Application.Commons.Dto;
 using FAS.FirehousePro.Application.FireDepartments;
 using FAS.FirehousePro.Application.FireDepartments.Dto;
 using FAS.FirehousePro.Authorization;
@@ -26,25 +29,24 @@ namespace FAS.FirehousePro.Web.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var input = new CreateFireDepartmentInput();
+            input.Address = new CreateAddressInput();
+            return View(input);
         }
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateFireDepartmentInput input)
         {
-            if (ModelState.IsValid)
-            {
-                await _fireDepartmentAppService.CreateFireDepartment(input);
-                return RedirectToAction("Index");
-            }
-
-            return View(input);
+            await _fireDepartmentAppService.CreateFireDepartment(input);
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var output = _fireDepartmentAppService.GetFireDepartments();
-            return View(output);
+            var fireDept = await _fireDepartmentAppService.GetFireDepartment(id);
+            var input = fireDept.MapTo<UpdateFireDepartmentInput>();
+
+            return View(input);
         }
 
         [HttpPost]

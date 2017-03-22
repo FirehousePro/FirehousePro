@@ -64,7 +64,7 @@ namespace FAS.FirehousePro.Core.FireDepartments
 
         public async Task<FireDepartment> GetFireDepartmentAsync(int id)
         {
-            return await _fireDepartmentRepo.GetAsync(id);
+            return await _fireDepartmentRepo.GetWithAsync(id, f => f.Tenant);
         }
 
         public async Task DeleteFireDepartment(int id)

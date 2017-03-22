@@ -12,12 +12,9 @@ namespace FAS.FirehousePro.Application.FireDepartments.Dto
     [AutoMapFrom(typeof(FireDepartment))]
     public class FireDepartmentListDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-
-
         public string Domain { get; set; }
-
-
         public AddressDto Address { get; set; }
     }
 }

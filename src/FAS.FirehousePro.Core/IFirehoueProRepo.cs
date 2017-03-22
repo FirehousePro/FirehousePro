@@ -13,6 +13,7 @@ namespace FAS.FirehousePro.Core
         where TEntity : class, IEntity<TPrimaryKey>
     {
         Task<List<TEntity>> GetAllListWithAsync(params Expression<Func<TEntity, object>>[] propertySelectors);
+        Task<TEntity> GetWithAsync(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors);
     }
 
     public interface IFirehoueProRepo<TEntity> : IFirehoueProRepoOfTPrimaryKey<TEntity, int>
