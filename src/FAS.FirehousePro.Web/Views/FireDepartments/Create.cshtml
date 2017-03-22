@@ -36,11 +36,11 @@
                 </div>
 
                 @{
-                    var vd = new ViewDataDictionary(ViewData);
-                    vd.TemplateInfo.HtmlFieldPrefix = "Address";
+                var vd = new ViewDataDictionary(ViewData);
+                vd.TemplateInfo.HtmlFieldPrefix = "Address";
                 }
 
-                @Html.Partial("_AddressForm", Model.Address, vd);
+                @Html.Partial("_AddressForm", Model.Address, vd)
 
             </div>
             <div>

@@ -32,7 +32,14 @@
                     <label>@L("AdminEmailAddress")</label>
                     <input class="form-control" asp-for="AdminEmailAddress">
                 </div>
-                <p>@L("DefaultPasswordIs", FAS.FirehousePro.Users.User.DefaultPassword)</p>
+                
+                @{
+                    var vd = new ViewDataDictionary(ViewData);
+                    vd.TemplateInfo.HtmlFieldPrefix = "Address";
+                }
+
+                @Html.Partial("_AddressForm", Model.Address, vd)
+
             </div>
             <div class="modal-footer">
                 <a href="/firedepartments" class="btn btn-default" data-dismiss="modal">@L("Cancel")</a>
