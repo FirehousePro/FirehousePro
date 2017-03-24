@@ -1,4 +1,5 @@
-﻿using FAS.FirehousePro.MultiTenancy;
+﻿using Abp.Specifications;
+using FAS.FirehousePro.MultiTenancy;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace FAS.FirehousePro.Core.FireDepartments
 {
     public interface IFireDepartmentManager
     {
-        IQueryable<FireDepartment> FireDepartments { get; }
-
-        Task<IdentityResult> CreateFireDepartmentAsync(FireDepartment fireDepartment, Tenant tenant);
-        Task CreateFireStationAsync(FireStation fireStation);
+        Task<IEnumerable<FireDepartment>> GetAllFireDepartments();
+        Task<IdentityResult> CreateFireDepartmentAsync(FireDepartment fireDepartment, Tenant tenant, string adminEmailAddress, string adminPassword);
+        Task<FireDepartment> UpdateFireDepartmentAsync(FireDepartment fireDepartment);
+        Task<IEnumerable<FireDepartment>> SearchFireDepartmentsAsync(ISpecification<FireDepartment> spec);
+        Task<FireDepartment> GetFireDepartmentAsync(int id);
+        Task DeleteFireDepartment(int id);
     }
 }

@@ -9,71 +9,62 @@ using FAS.FirehousePro.Authorization.Roles;
 using FAS.FirehousePro.Editions;
 using Abp.AutoMapper;
 using FAS.FirehousePro.Users;
+using System;
+using FAS.FirehousePro.Core.Commons;
 
 namespace FAS.FirehousePro.Application.FireDepartments
 {
     public class FireDepartmentAppService : FirehouseProAppServiceBase, IFireDepartmentAppService
     {
         private readonly IFireDepartmentManager _fireDepartmentManager;
-        private readonly RoleManager _roleManager;
-        private readonly EditionManager _editionManager;
 
-        public FireDepartmentAppService(
-            IFireDepartmentManager fireDepartmentManager,
-            RoleManager roleManager,
-            EditionManager editionManager)
+        public FireDepartmentAppService(IFireDepartmentManager fireDepartmentManager)
         {
             _fireDepartmentManager = fireDepartmentManager;
-            _roleManager = roleManager;
-            _editionManager = editionManager;
+            
         }
 
         public async Task CreateFireDepartment(CreateFireDepartmentInput input)
         {
-            //Create tenant
             var fireDepartment = input.MapTo<FireDepartment>();
             var tenant = new Tenant(input.Domain, input.Name);
 
-            var defaultEdition = await _editionManager.FindByNameAsync(EditionManager.DefaultEditionName);
-            if (defaultEdition != null)
-            {
-                tenant.EditionId = defaultEdition.Id;
-            }
-
-            CheckErrors(await _fireDepartmentManager.CreateFireDepartmentAsync(fireDepartment, tenant));
-            await CurrentUnitOfWork.SaveChangesAsync(); //To get new tenant's id.
-
-            //We are working entities of new tenant, so changing tenant filter
-            using (CurrentUnitOfWork.SetTenantId(tenant.Id))
-            {
-                //Create static roles for new tenant
-                CheckErrors(await _roleManager.CreateStaticRoles(tenant.Id));
-
-                await CurrentUnitOfWork.SaveChangesAsync(); //To get static role ids
-
-                //grant all permissions to admin role
-                var adminRole = _roleManager.Roles.Single(r => r.Name == StaticRoleNames.Tenants.Admin);
-                await _roleManager.GrantAllPermissionsAsync(adminRole);
-
-                //Create admin user for the tenant
-                var adminUser = User.CreateTenantAdminUser(tenant.Id, input.AdminEmailAddress, User.DefaultPassword);
-                CheckErrors(await UserManager.CreateAsync(adminUser));
-                await CurrentUnitOfWork.SaveChangesAsync(); //To get admin user's id
-
-                //Assign admin user to role!
-                CheckErrors(await UserManager.AddToRoleAsync(adminUser.Id, adminRole.Name));
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
+            CheckErrors(await _fireDepartmentManager.CreateFireDepartmentAsync(fireDepartment, tenant, input.AdminEmailAddress, input.AdminPassword));
         }
 
-        public ListResultDto<FireDepartmentListDto> GetFireDepartments()
+        public void DeleteFireDepartment(int id)
         {
-            return new ListResultDto<FireDepartmentListDto>(
-                _fireDepartmentManager.FireDepartments
-                    .OrderBy(f => f.Name)
-                    .ToList()
-                    .MapTo<List<FireDepartmentListDto>>()
-                );
+            throw new NotImplementedException();
+        }
+
+        public async Task<FireDepartmentDto> GetFireDepartment(int id)
+        {
+            var fireDepartment = await _fireDepartmentManager.GetFireDepartmentAsync(id);
+            return fireDepartment.MapTo<FireDepartmentDto>();
+        }
+
+        public async Task<ListResultDto<FireDepartmentListDto>> GetFireDepartments()
+        {
+            var fireDepts = await _fireDepartmentManager.GetAllFireDepartments();
+            return new ListResultDto<FireDepartmentListDto>(fireDepts.MapTo<List<FireDepartmentListDto>>());
+        }
+
+        public async Task UpdateFireDepartment(UpdateFireDepartmentInput input)
+        {
+            var fireDept = await _fireDepartmentManager.GetFireDepartmentAsync(input.Id);
+
+            if (fireDept == null)
+                throw new InvalidOperationException("Could not find fire department to update");
+
+            fireDept.Name = input.Name;
+            fireDept.ChangeDomain(input.Domain);
+
+            var address = input.Address.MapTo<Address>();
+
+            if (fireDept.Address != address)
+                fireDept.Address = address;
+
+            await _fireDepartmentManager.UpdateFireDepartmentAsync(fireDept);
         }
     }
 }

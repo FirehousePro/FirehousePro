@@ -1,0 +1,47 @@
+﻿@using FAS.FirehousePro.Web.Startup
+@using FAS.FirehousePro.MultiTenancy
+@using FAS.FirehousePro.Application.FireDepartments.Dto
+
+@{
+    ViewBag.CurrentPageName = PageNames.FireDepartments; //The menu item will be active for this page.
+}
+
+@model UpdateFireDepartmentInput
+
+<h1>Edit Fire Department</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form name="departmentEditForm" role="form" asp-controller="FireDepartments" asp-action="Edit">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>@L("CreateNewFireDepartment")</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" asp-for="Id"/>
+                <div class="form-group">
+                    <label>@L("DepartmentDomain")</label>
+                    <input class="form-control" asp-for="Domain">
+                    <span asp-validation-for="Domain" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>@L("Name")</label>
+                    <input class="form-control" asp-for="Name">
+                </div>
+                
+                @{
+                    var vd = new ViewDataDictionary(ViewData);
+                    vd.TemplateInfo.HtmlFieldPrefix = "Address";
+                }
+
+                @Html.Partial("_AddressForm", Model.Address, vd)
+
+            </div>
+            <div class="modal-footer">
+                <a href="/firedepartments" class="btn btn-default" data-dismiss="modal">@L("Cancel")</a>
+                <button type="submit" class="btn btn-primary blue"><i class="fa fa-save"></i> <span>@L("Save")</span></button>
+            </div>
+        </form>
+    </div>
+</div>

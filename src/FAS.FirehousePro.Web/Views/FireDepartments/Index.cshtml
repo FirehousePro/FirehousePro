@@ -5,26 +5,18 @@
 @{
     ViewBag.CurrentPageName = PageNames.FireDepartments; //The menu item will be active for this page.
 }
-@section scripts
-{
-    <environment names="Development">
-        <script src="~/view-resources/Views/FireDepartments/Index.js" asp-append-version="true"></script>
-    </environment>
 
-    <environment names="Staging,Production">
-        <script src="~/view-resources/Views/FireDepartments/Index.min.js" asp-append-version="true"></script>
-    </environment>
-}
 <div>
     <h1>@L("FireDepartments")</h1>
     <div class="row">
         <div class="col-md-12">
-            <button data-toggle="modal" data-target="#DepartmentCreateModal" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> @L("CreateNewFireDepartment")</button>
+            <a asp-controller="FireDepartments" asp-action="Create" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> @L("CreateNewFireDepartment")</a>
             <table class="table">
                 <thead>
                     <tr>
                         <th>@L("DepartmentDomain")</th>
                         <th>@L("Name")</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,42 +25,13 @@
                         <tr>
                             <td>@dept.Domain</td>
                             <td>@dept.Name</td>
+                            <td>
+                                <a asp-controller="FireDepartments" asp-action="Edit" asp-route-id="@dept.Id" >Edit</a>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="DepartmentCreateModal" tabindex="-1" role="dialog" aria-labelledby="DepartmentCreateModalLabel" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form name="departmentCreateForm" role="form" novalidate class="form-validation">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span>@L("CreateNewFireDepartment")</span>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>@L("DepartmentDomain")</label>
-                        <input class="form-control" type="text" name="Domain" required maxlength="@Tenant.MaxTenancyNameLength" minlength="2">
-                    </div>
-                    <div class="form-group">
-                        <label>@L("Name")</label>
-                        <input type="text" name="Name" class="form-control" required maxlength="@Tenant.MaxNameLength">
-                    </div>
-                    <div class="form-group">
-                        <label>@L("AdminEmailAddress")</label>
-                        <input type="email" name="AdminEmailAddress" class="form-control" required maxlength="@FAS.FirehousePro.Users.User.MaxEmailAddressLength">
-                    </div>
-                    <p>@L("DefaultPasswordIs", FAS.FirehousePro.Users.User.DefaultPassword)</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">@L("Cancel")</button>
-                    <button type="submit" class="btn btn-primary blue"><i class="fa fa-save"></i> <span>@L("Save")</span></button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

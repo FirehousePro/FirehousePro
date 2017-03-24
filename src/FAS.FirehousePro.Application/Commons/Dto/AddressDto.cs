@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace FAS.FirehousePro.Application.Commons.Dto
 {
     [AutoMapFrom(typeof(Address))]
+    [AutoMapTo(typeof(CreateAddressInput))]
     public class AddressDto
     {
         public string Line1 { get; private set; }
